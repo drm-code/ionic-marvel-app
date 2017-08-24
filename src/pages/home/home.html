@@ -1,17 +1,29 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-searchbar
+      placeholder="Comic title or year. E.g. 2002"
+      [(ngModel)]="searchQuery"
+      (keypress)="doSearch($event)"></ion-searchbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+  <ion-item>
+    <ion-label>{{ searchTitle }}</ion-label>
+  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let comic of comics">
+      <ion-thumbnail item-start>
+        <img [src]="comic.thumbnail.path+'.'+comic.thumbnail.extension">
+      </ion-thumbnail>
+      <h2>{{ comic.title }}</h2>
+      <p>{{ comic.variantDescription }}</p>
+      <p>{{ comic.format }}</p>
+      <button ion-button clear item-end>View</button>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content
+     loadingText="Loading more data..."></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
 </ion-content>
