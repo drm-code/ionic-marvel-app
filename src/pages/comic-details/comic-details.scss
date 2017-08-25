@@ -1,5 +1,3 @@
-@import "../../theme/variables";
-
 page-comic-details {
 
 }
@@ -10,8 +8,4 @@ ion-icon.not-found {
 
 ion-icon.favorite {
   font-size: 30px;
-}
-
-p.gray {
-  color: nth(nth($colors, 8), 2);
 }

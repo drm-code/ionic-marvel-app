@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { ComicDetailsPage } from '../pages/comic-details/comic-details';
+import { FavoritesPage } from '../pages/favorites/favorites';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +18,7 @@ import { FavoritesProvider } from '../providers/favorites/favorites';
     MyApp,
     HomePage,
     ComicDetailsPage,
+    FavoritesPage,
     TabsPage
   ],
   imports: [
@@ -29,6 +31,7 @@ import { FavoritesProvider } from '../providers/favorites/favorites';
     MyApp,
     HomePage,
     ComicDetailsPage,
+    FavoritesPage,
     TabsPage
   ],
   providers: [
