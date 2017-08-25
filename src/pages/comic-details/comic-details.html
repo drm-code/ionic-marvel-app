@@ -1,0 +1,86 @@
+<!--
+  Generated template for the ComicDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="red">
+    <ion-title>Comic details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid *ngIf="loaded">
+    <ion-row>
+      <ion-col>
+        <h3 text-center>{{ comic.title }}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 offset-3>
+        <img [src]="comic.thumbnail.path + '.' + comic.thumbnail.extension">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <button ion-button icon-only clear item-end (click)="doFavorite()">
+          <ion-icon class="favorite" color="red" name="ios-heart" isActive="{{ isFavorite }}"></ion-icon>
+        </button>
+        <ion-badge color="indigo">Published: {{ getPublishedDate() | date }}</ion-badge>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col padding>
+        <h3 text-center>{{ comic.format }}</h3>
+        <p class="gray" *ngIf="!comic.description" text-center>There is no description for this comic.</p>
+        <p class="gray" *ngIf="comic.description">{{ comic.description}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col padding>
+        <h3 text-center>Images</h3>
+        <p class="gray" *ngIf="comic.images.length === 0" text-center>There are no images for this comic.</p>
+        <ion-row>
+          <ion-col col-4 *ngFor="let image of comic.images">
+            <img [src]="image.path + '.' + image.extension">
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col padding>
+        <h3 text-center>Creators</h3>
+        <p class="gray" *ngIf="creators.length === 0" text-center>There is no creators found for this comic.</p>
+        <ion-list *ngIf="creators.length > 0">
+          <ion-item *ngFor="let creator of creators">
+            <h2>{{ creator.fullName}}</h2>
+            <p>{{ creator.comics.available }} Comics / {{ creator.series.available }} Series</p>
+            <ion-badge color="indigo" item-end>{{ creator.role }}</ion-badge>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col padding>
+        <h3 text-center>Characters</h3>
+        <p class="gray" *ngIf="characters.length === 0" text-center>There are no characters found for this comic.</p>
+        <ion-row>
+          <ion-col col-6 *ngFor="let character of characters">
+            <ion-card>
+              <img [src]="character.thumbnail.path + '.' + character.thumbnail.extension"/>
+              <ion-card-content>
+                <p>{{ character.name }}</p>
+                <ion-icon name="star"></ion-icon>
+                {{ character.comics.available }} Comics
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
