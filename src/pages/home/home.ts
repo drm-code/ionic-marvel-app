@@ -79,7 +79,7 @@ export class HomePage {
   }
 
   comicDetails(id: number) {
-    this.navCtrl.push(ComicDetailsPage, {id: id})
+    this.navCtrl.push(ComicDetailsPage, {id: id});
   }
 
 }

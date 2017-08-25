@@ -1,16 +1,15 @@
 <ion-header>
   <ion-navbar color="red">
-    <ion-searchbar
-      placeholder="Comic title or year. E.g. 2002"
-      [(ngModel)]="searchQuery"
-      (keypress)="doSearch($event)"></ion-searchbar>
+    <ion-title>Marvel comics finder</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label>{{ searchTitle }}</ion-label>
-  </ion-item>
+  <ion-searchbar
+    placeholder="Comic title or year. E.g. 2002"
+    [(ngModel)]="searchQuery"
+    (keypress)="doSearch($event)">
+  </ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let comic of comics">
       <ion-thumbnail item-start>
