@@ -17,7 +17,7 @@
       </ion-thumbnail>
       <h2>{{ comic.title }}</h2>
       <p>{{ comic.format }}</p>
-      <!-- <ion-icon name="ios-heart" isActive="true" color="red"></ion-icon> -->
+      <ion-icon *ngIf="comic.isFavorite" name="ios-heart" isActive="true" color="red"></ion-icon>
       <button ion-button clear item-end (click)="comicDetails(comic.id)">View</button>
     </ion-item>
   </ion-list>
