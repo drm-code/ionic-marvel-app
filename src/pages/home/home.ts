@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NavController,
   LoadingController } from 'ionic-angular';
@@ -7,6 +7,7 @@ import { ComicDetailsPage } from '../comic-details/comic-details';
 
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { FavoritesProvider } from '../../providers/favorites/favorites';
 
 import { environment } from '../../environment/environment';
 
@@ -14,7 +15,7 @@ import { environment } from '../../environment/environment';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   public comics: any;
   public offset: number = 0;
@@ -26,12 +27,27 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public http: Http,
-    public loadingController: LoadingController) {
-      this.http.get(this.url + this.offset)
-        .map(res => res.json())
-        .subscribe(data => {
-          this.comics = data.data.results;
+    public loadingController: LoadingController,
+    public favoritesProvider: FavoritesProvider) { }
+
+  ngOnInit() {
+    this.loading = this.loadingController.create({
+      content: 'Searching comics...'
+    });
+    this.loading.present();
+    this.http.get(this.url + this.offset)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.comics = data.data.results;
+        this.comics.map(c => {
+          let index: number = this.favoritesProvider.getFavorites().findIndex(f => f.id === c.id);
+          if (index !== -1) {
+            c.isFavorite = true;
+            return true;
+          }
         });
+        this.loading.dismiss();
+      });
   }
 
   doInfinite(infiniteScroll) {
@@ -43,6 +59,13 @@ export class HomePage {
         .map(res => res.json())
         .subscribe(data => {
           this.comics = this.comics.concat(data.data.results);
+          this.comics.map(c => {
+            let index: number = this.favoritesProvider.getFavorites().findIndex(f => f.id === c.id);
+            if (index !== -1) {
+              c.isFavorite = true;
+              return true;
+            }
+          });
         });
 
       console.log('Async operation has ended');
@@ -72,6 +95,13 @@ export class HomePage {
       .map(res => res.json())
       .subscribe(data => {
         this.comics = data.data.results;
+        this.comics.map(c => {
+          let index: number = this.favoritesProvider.getFavorites().findIndex(f => f.id === c.id);
+          if (index !== -1) {
+            c.isFavorite = true;
+            return true;
+          }
+        });
         this.loading.dismiss();
         this.searchTitle = this.searchQuery === '' ? 'Last week comics' : 'Search results';
       });
@@ -80,6 +110,21 @@ export class HomePage {
 
   comicDetails(id: number) {
     this.navCtrl.push(ComicDetailsPage, {id: id});
+  }
+
+  ionViewDidEnter() {
+    this.http.get(this.url + this.offset)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.comics = data.data.results;
+        this.comics.map(c => {
+          let index: number = this.favoritesProvider.getFavorites().findIndex(f => f.id === c.id);
+          if (index !== -1) {
+            c.isFavorite = true;
+            return true;
+          }
+        });
+      });
   }
 
 }
