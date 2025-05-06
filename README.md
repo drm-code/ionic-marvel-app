@@ -1,4 +1,4 @@
-<<<<<<< fda8db6e844f548162b7a684bb7423c6a60243a6
+
 # ionic-marvel-app
 Ionic web app that talks to Marvel API
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
